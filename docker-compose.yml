@@ -1,0 +1,23 @@
+version: '3'
+services:
+  nginx:
+    image: nginx
+    # 端口映射
+    ports:
+      - "80:80"
+    # 数据卷
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d
+      - ./html/:/var/www/html
+      - ./log:/var/log/nginx
+    # 容器名称
+    container_name: "docker-compose-nginx"
+  php:
+    build: ./php
+    # image指定build Dockerfile生成镜像的名称
+    image: php:7.2-fpm
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./html/:/var/www/html
+    container_name: "docker-compose-php"
